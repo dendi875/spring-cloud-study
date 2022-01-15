@@ -1,0 +1,46 @@
+---
+spring:
+  application:
+    name: spring-cloud-eureka-server-cluster
+  profiles: host1
+server:
+  port: 8100
+eureka:
+  instance:
+    hostname: host1 #指定机器1
+  client:
+    serviceUrl:
+      defaultZone: http://host2:8101/eureka/,http://host3:8102/eureka/ #指定另外两台机器
+    register-with-eureka: true # 服务中心可以注册自已，默认情况为 true
+    fetch-registry: true # 服务中心可以注册自己，默认情况为 true
+---
+spring:
+  application:
+    name: spring-cloud-eureka-server-cluster
+  profiles: host2
+server:
+  port: 8101
+eureka:
+  instance:
+    hostname: host2 #指定机器2
+  client:
+    serviceUrl:
+      defaultZone: http://host1:8100/eureka/,http://host3:8102/eureka/ #指定另外两台机器
+    register-with-eureka: true # 服务中心可以注册自已，默认情况为 true
+    fetch-registry: true # 服务中心可以注册自己，默认情况为 true
+---
+spring:
+  application:
+    name: spring-cloud-eureka-server-cluster
+  profiles: host3
+server:
+  port: 8102
+eureka:
+  instance:
+    hostname: host3 #指定机器3
+  client:
+    serviceUrl:
+      defaultZone: http://host1:8100/eureka/,http://host2:8101/eureka/  #指定另外两台机器
+    register-with-eureka: true # 服务中心可以注册自已，默认情况为 true
+    fetch-registry: true # 服务中心可以注册自己，默认情况为 true
+
